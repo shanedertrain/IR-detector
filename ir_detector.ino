@@ -29,7 +29,8 @@ DFRobotDFPlayerMini mp3Player;
 // debounce timer for all trips
 static unsigned long tripTime = 0;
 
-void setup() {
+void setup() 
+{
   pinMode(SWITCH_PIN, INPUT_PULLUP);
   mp3Serial.begin(9600);
   mp3Player.begin(mp3Serial);
@@ -39,7 +40,8 @@ void setup() {
   ads2.begin();
 }
 
-void loop() {
+void loop() 
+{
     // Declare variables
     unsigned long currentTime = millis();
 
@@ -67,21 +69,33 @@ void loop() {
         mp3Player.playMp3Folder(5);
     }
   
-    if (digitalRead(SWITCH_PIN) == LOW) {
+    if (digitalRead(SWITCH_PIN) == LOW) 
+    {
         mp3Player.playMp3Folder(6);
-    } else {
+    } 
+    else 
+    {
         // Check for all trips and debounce
         if (frontLeft > TRIP_THRESHOLD || frontRight > TRIP_THRESHOLD ||
             rearLeft > TRIP_THRESHOLD || rearRight > TRIP_THRESHOLD ||
-            middleLeft > TRIP_THRESHOLD || middleRight > TRIP_THRESHOLD) {
-            if (currentTime - tripTime >= TRIP_DEBOUNCE_MS) {
-                if (frontLeft > TRIP_THRESHOLD || frontRight > TRIP_THRESHOLD) {
+            middleLeft > TRIP_THRESHOLD || middleRight > TRIP_THRESHOLD) 
+        {
+            if (currentTime - tripTime >= TRIP_DEBOUNCE_MS) 
+            {
+                if (frontLeft > TRIP_THRESHOLD || frontRight > TRIP_THRESHOLD) 
+                {
                     mp3Player.playMp3Folder(4);
-                } else if (rearLeft > TRIP_THRESHOLD || rearRight > TRIP_THRESHOLD) {
+                }
+                else if (rearLeft > TRIP_THRESHOLD || rearRight > TRIP_THRESHOLD) 
+                {
                     mp3Player.playMp3Folder(3);
-                } else if (middleLeft > TRIP_THRESHOLD) {
+                } 
+                else if (middleLeft > TRIP_THRESHOLD) 
+                {
                     mp3Player.playMp3Folder(2);
-                } else if (middleRight > TRIP_THRESHOLD) {
+                } 
+                else if (middleRight > TRIP_THRESHOLD) 
+                {
                     mp3Player.playMp3Folder(1);
                 }
                 tripTime = currentTime;
