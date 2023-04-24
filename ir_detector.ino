@@ -77,7 +77,6 @@ void exit_sleep_mode()
     enable_peripherals();
 
     MP3Player.playMp3Folder(SPEECH_006); //on message
-    state = READY_MODE; //set device into on state
 }
 
 void enter_sleep_mode()
