@@ -42,7 +42,7 @@ DFMiniMp3 MP3Player;
 //battery vars
 int battery_percent = 0; // or some other initial value
 
-//photodiode vars
+//photodiode adc vars
 int adc_front_left = 0;
 int adc_front_right = 0;
 int adc_rear_left = 0;
@@ -50,9 +50,9 @@ int adc_rear_right = 0;
 int adc_middle_left = 0;
 int adc_middle_right = 0;
 
-// debounce timer for all trips
-unsigned long trip_time = 0;
+// debounce timers
 unsigned long current_time = 0;
+unsigned long trip_time = 0;
 
 void enable_peripherals()
 {
