@@ -42,8 +42,17 @@ DFMiniMp3 MP3Player;
 //battery vars
 int battery_percent = 0; // or some other initial value
 
+//photodiode vars
+int adc_front_left = 0;
+int adc_front_right = 0;
+int adc_rear_left = 0;
+int adc_rear_right = 0;
+int adc_middle_left = 0;
+int adc_middle_right = 0;
+
 // debounce timer for all trips
-static unsigned long tripTime = 0;
+unsigned long trip_time = 0;
+unsigned long current_time = 0;
 
 void enable_peripherals()
 {
@@ -121,15 +130,15 @@ void setup()
 
 void loop() 
 {
-    unsigned long current_time = millis();
+    current_time = millis();
 
     // Read sensor values
-    int adc_front_left = ads1.readADC_SingleEnded(PHOTO_FRONT_LEFT_PIN);
-    int adc_front_right = ads1.readADC_SingleEnded(PHOTO_FRONT_RIGHT_PIN);
-    int adc_rear_left = ads1.readADC_SingleEnded(PHOTO_REAR_LEFT_PIN);
-    int adc_rear_right = ads1.readADC_SingleEnded(PHOTO_REAR_RIGHT_PIN);
-    int adc_middle_left = ads2.readADC_SingleEnded(PHOTO_MIDDLE_LEFT_PIN);
-    int adc_middle_right = ads2.readADC_SingleEnded(PHOTO_MIDDLE_RIGHT_PIN);
+    adc_front_left = ads1.readADC_SingleEnded(PHOTO_FRONT_LEFT_PIN);
+    adc_front_right = ads1.readADC_SingleEnded(PHOTO_FRONT_RIGHT_PIN);
+    adc_rear_left = ads1.readADC_SingleEnded(PHOTO_REAR_LEFT_PIN);
+    adc_rear_right = ads1.readADC_SingleEnded(PHOTO_REAR_RIGHT_PIN);
+    adc_middle_left = ads2.readADC_SingleEnded(PHOTO_MIDDLE_LEFT_PIN);
+    adc_middle_right = ads2.readADC_SingleEnded(PHOTO_MIDDLE_RIGHT_PIN);
 
     // Check battery level
     if (battery_percent < LOW_BATTERY_PERCENT) 
@@ -142,7 +151,7 @@ void loop()
         adc_rear_left > TRIP_ADC_THRESHOLD || adc_rear_right > TRIP_ADC_THRESHOLD ||
         adc_middle_left > TRIP_ADC_THRESHOLD || adc_middle_right > TRIP_ADC_THRESHOLD) 
     {
-        if (current_time - tripTime >= TRIP_DEBOUNCE_MS) 
+        if (current_time - trip_time >= TRIP_DEBOUNCE_MS) 
         {
             if (adc_front_left > TRIP_ADC_THRESHOLD || adc_front_right > TRIP_ADC_THRESHOLD) 
             {
@@ -160,7 +169,7 @@ void loop()
             {
                 MP3Player.playMp3Folder(SPEECH_001);
             }
-            tripTime = current_time;
+            trip_time = current_time;
         }
     }
 
